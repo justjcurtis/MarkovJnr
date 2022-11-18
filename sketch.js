@@ -17,8 +17,8 @@ const reset = () => {
 }
 
 function setup() {
-  w = 400//window.innerWidth
-  h = 400//window.innerHeight
+  w = window.innerWidth
+  h = window.innerHeight
   createCanvas(w, h)
   background(51)
   cellSize = h / dim
