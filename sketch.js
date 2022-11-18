@@ -6,12 +6,14 @@ let w
 let h
 
 const reset = () => {
+  solving = false
   cells = new Array(Math.floor(w / cellSize)).fill(0).map(_ => new Array(dim).fill(0).map(_ => ({ color: "black" })))
 
   cells[Math.floor(Math.floor(cells.length / 2))][Math.floor(dim / 2)].color = 'red'
   mark = new MarkovJnr([
     ["Rbb", "GGR"], ["RGG", "wwR"], // maze gen
     ["Bw", "PB"], ["PBb", "BYb"], ["PBY", "BYY"], ["BR", "PR"], ["PPB", "PBY"], // maze solve
+    ["Y", "w"] // cleanup
   ])
   loop()
 }
@@ -55,7 +57,7 @@ function draw() {
       solving = true
       // set entry point for solver
       outer: for (let i = 0; i < cells.length; i++) {
-        for (let j = 0; j < cells[0].length; j++) {
+        for (let j = 1; j < cells[0].length; j++) {
           const { color } = cells[i][j]
           if (color == 'white') {
             cells[i][j - 1].color = 'blue'
