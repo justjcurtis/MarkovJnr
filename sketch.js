@@ -9,13 +9,16 @@ const reset = () => {
   cells = new Array(Math.floor(w / cellSize)).fill(0).map(_ => new Array(dim).fill(0).map(_ => ({ color: "black" })))
 
   cells[Math.floor(Math.floor(cells.length / 2))][Math.floor(dim / 2)].color = 'red'
-  mark = new MarkovJnr([["Rbb", "GGR"], ["RGG", "wwR"]])
+  mark = new MarkovJnr([
+    ["Rbb", "GGR"], ["RGG", "wwR"], // maze gen
+    ["Bw", "PB"], ["PBb", "Bgb"], ["PBg", "Bgg"], // maze solve
+  ])
   loop()
 }
 
 function setup() {
-  w = window.innerWidth
-  h = window.innerHeight
+  w = 400//window.innerWidth
+  h = 400//window.innerHeight
   createCanvas(w, h)
   background(51)
   cellSize = h / dim
@@ -36,6 +39,7 @@ function setup() {
 
 let canReset = false
 let falseCount = 0
+let solving = false
 function draw() {
   for (let i = 0; i < cells.length; i++) {
     for (let j = 0; j < cells[0].length; j++) {
@@ -47,9 +51,25 @@ function draw() {
   }
   falseCount += !mark.update(cells) ? 1 : 0
   if (falseCount > 10) {
-    falseCount = 0
-    canReset = true
-    noLoop()
+    if (!solving) {
+      solving = true
+      // set entry point for solver
+      outer: for (let i = 0; i < cells.length; i++) {
+        for (let j = 0; j < cells[0].length; j++) {
+          const { color } = cells[i][j]
+          if (color == 'white') {
+            cells[i][j - 1].color = 'blue'
+            break outer
+          }
+        }
+      }
+      falseCount = 0
+    } else {
+      // enable reset on tap
+      falseCount = 0
+      canReset = true
+      noLoop()
+    }
   }
 }
 
