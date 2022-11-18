@@ -11,7 +11,7 @@ const reset = () => {
   cells[Math.floor(Math.floor(cells.length / 2))][Math.floor(dim / 2)].color = 'red'
   mark = new MarkovJnr([
     ["Rbb", "GGR"], ["RGG", "wwR"], // maze gen
-    ["Bw", "PB"], ["PBb", "Bgb"], ["PBg", "Bgg"], // maze solve
+    ["Bw", "PB"], ["PBb", "BYb"], ["PBY", "BYY"], ["BR", "PR"], ["PPB", "PBY"], // maze solve
   ])
   loop()
 }
