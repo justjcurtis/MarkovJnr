@@ -13,7 +13,6 @@ const reset = () => {
   mark = new MarkovJnr([
     ["Rbb", "GGR"], ["RGG", "wwR"], // maze gen
     ["Bw", "PB"], ["PBb", "BYb"], ["PBY", "BYY"], ["BR", "PR"], ["PPB", "PBY"], // maze solve
-    ["YYYYY", "wwwww"], ["YYYY", "wwww"], ["YYY", "www"], ["YY", "ww"], ["Y", "w"] // cleanup
   ])
   loop()
 }
